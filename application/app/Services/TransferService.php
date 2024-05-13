@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\NotificationContract;
-use App\Repositories\Contracts\PaymentGatewayContract;
+use App\Contracts\NotificationContract;
+use App\Contracts\PaymentGatewayContract;
 use App\DTO\TransferDTO;
 use App\Enum\TransferStatusEnum;
 use App\Exceptions\TransferException;
@@ -14,13 +14,13 @@ use App\Repositories\TransferRepository;
 use App\Repositories\WalletRepository;
 use Illuminate\Support\Facades\DB;
 
-readonly class TransferService
+class TransferService implements PaymentGatewayContract, NotificationContract
 {
     public function __construct(
         private TransferRepository     $transferRepository,
         private WalletRepository       $walletRepository,
-//        private PaymentGatewayContract $paymentGateway,
-//        private NotificationContract   $notificationContract,
+        private PaymentGatewayContract $paymentGateway,
+        private NotificationContract   $notificationContract,
         private CustomerRepository     $customerRepository,
     )
     {
@@ -46,13 +46,13 @@ readonly class TransferService
             $this->walletRepository->withdrawal($payerWallet->getKey(), $transferDTO->amount);
             $this->transferRepository->updateTransferStatus($transaction->getKey(), TransferStatusEnum::Done);
 
-//            if (!$this->paymentGateway->authorizePayment()) {
-//                throw TransferException::notAuthorizedByGateway($this->paymentGateway);
-//            }
-//
-//            if (!$this->notificationContract->sendPaymentApproval()) {
-//                throw TransferException::paymentMessageNotSent($this->notificationContract);
-//            }
+            if (!$this->paymentGateway->authorizePayment()) {
+                throw TransferException::notAuthorizedByGateway($this->paymentGateway);
+            }
+
+            if (!$this->notificationContract->sendPaymentApproval()) {
+                throw TransferException::paymentMessageNotSent($this->notificationContract);
+            }
 
             return true;
         });
@@ -70,5 +70,25 @@ readonly class TransferService
         if ($payerWallet->hasAmount($transferDTO->amount)) {
             throw TransferException::outOfPocket();
         }
+    }
+
+    public function getProviderName()
+    {
+        // TODO: Implement getProviderName() method.
+    }
+
+    public function sendPaymentApproval(): bool
+    {
+        // TODO: Implement sendPaymentApproval() method.
+    }
+
+    public function getPaymentGatewayName(): string
+    {
+        // TODO: Implement getPaymentGatewayName() method.
+    }
+
+    public function authorizePayment(): bool
+    {
+        // TODO: Implement authorizePayment() method.
     }
 }

@@ -32,7 +32,6 @@ class CreateTransferRequest extends FormRequest
 
     public function toDTO(): TransferDTO
     {
-        $this->dd('sadas');
         return new TransferDTO(
             payerId: $this->input('payer_id'),
             payeeId: $this->input('payee_id'),

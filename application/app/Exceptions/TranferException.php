@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Contracts\NotificationContract;
 use App\Contracts\PaymentGatewayContract;
 use Exception;
-use App\Contracts\NotificationContract;
 
 class TransferException extends Exception
 {

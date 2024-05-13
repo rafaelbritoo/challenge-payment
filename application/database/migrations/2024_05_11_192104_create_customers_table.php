@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id()->primary();
-            $table->string('full_name');
-            $table->string('cpf',14)->unique();
-            $table->string('cnpj',18)->unique();
+            $table->string('name');
+            $table->string('document',18)->unique();
             $table->string('email')->unique();
             $table->string('password',255);
             $table->enum('user_type', ['common', 'retailer'])->default('common');

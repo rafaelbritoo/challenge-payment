@@ -16,10 +16,10 @@ class TransferController extends Controller
 
     public function postTransfer(
         CreateTransferRequest $request
-    ): Response
+    )
     {
-        var_dump('teste');die;
-//        $this->transferService->handle($request->toDTO());
-//        return response()->noContent();
+        dd($request);
+        $this->transferService->handle($request->toDTO());
+        return response()->noContent();
     }
 }
