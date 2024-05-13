@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('cnpj',18)->unique();
             $table->string('email')->unique();
             $table->string('password',255);
-            $table->enum('user_type', ['common', 'reteailer'])->default('common');
+            $table->enum('user_type', ['common', 'retailer'])->default('common');
             $table->timestamps();
         });
 
