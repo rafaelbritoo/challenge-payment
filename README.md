@@ -1,6 +1,31 @@
 # challenge-payment
 challenge to make a payment between customer and company
 
+# Setup Docker Para o projetos
+
+
+### Passo a passo
+
+Suba os containers do projeto
+```sh
+docker compose up -d --build
+```
+
+
+Acessar o container
+```sh
+docker compose exec app bash
+```
+
+
+Instalar as dependências do projeto
+```sh
+cd application/
+composer install
+```
+
+Acessar o projeto
+[http://localhost:8000](http://localhost:8989)
 
 # Estrutura banco de dados
 
